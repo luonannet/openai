@@ -58,8 +58,8 @@ func TestAPI(t *testing.T) {
 	)
 
 	checks.NoError(t, err, "CreateChatCompletion (without name) returned error")
-
-	_, err = c.CreateChatCompletion(
+	var respon ChatCompletionResponse
+	respon, err = c.CreateChatCompletion(
 		ctx,
 		ChatCompletionRequest{
 			Model: GPT3Dot5Turbo,
@@ -73,6 +73,7 @@ func TestAPI(t *testing.T) {
 		},
 	)
 	checks.NoError(t, err, "CreateChatCompletion (with name) returned error")
+	t.Log("----------respon:", respon)
 
 	stream, err := c.CreateCompletionStream(ctx, CompletionRequest{
 		Prompt:    "Ex falso quodlibet",
@@ -93,6 +94,7 @@ func TestAPI(t *testing.T) {
 			t.Errorf("Stream error: %v", err)
 		} else {
 			counter++
+			t.Log(counter, "----------counter:")
 		}
 	}
 	if counter == 0 {
