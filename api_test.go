@@ -43,22 +43,22 @@ func TestAPI(t *testing.T) {
 	}
 	_, err = c.CreateEmbeddings(ctx, embeddingReq)
 	checks.NoError(t, err, "Embedding error")
-
-	_, err = c.CreateChatCompletion(
+	var respon ChatCompletionResponse
+	respon, err = c.CreateChatCompletion(
 		ctx,
 		ChatCompletionRequest{
 			Model: GPT3Dot5Turbo,
 			Messages: []ChatCompletionMessage{
 				{
-					Role:    ChatMessageRoleUser,
-					Content: "Hello!",
+					Role:    ChatMessageRoleAssistant,
+					Content: "用中英日三种语言的json格式输出`基本`的基本信息",
 				},
 			},
 		},
 	)
 
 	checks.NoError(t, err, "CreateChatCompletion (without name) returned error")
-	var respon ChatCompletionResponse
+	t.Log("-1---------respon:", respon)
 	respon, err = c.CreateChatCompletion(
 		ctx,
 		ChatCompletionRequest{
@@ -73,7 +73,7 @@ func TestAPI(t *testing.T) {
 		},
 	)
 	checks.NoError(t, err, "CreateChatCompletion (with name) returned error")
-	t.Log("----------respon:", respon)
+	t.Log("--2--------respon:", respon)
 
 	stream, err := c.CreateCompletionStream(ctx, CompletionRequest{
 		Prompt:    "Ex falso quodlibet",
