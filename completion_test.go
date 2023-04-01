@@ -18,7 +18,7 @@ import (
 )
 
 func TestCompletionsWrongModel(t *testing.T) {
-	config := DefaultConfig("whatever")
+	config := DefaultConfig(test.GetTestToken())
 	config.BaseURL = "http://localhost/v1"
 	client := NewClientWithConfig(config)
 
@@ -35,7 +35,7 @@ func TestCompletionsWrongModel(t *testing.T) {
 }
 
 func TestCompletionWithStream(t *testing.T) {
-	config := DefaultConfig("whatever")
+	config := DefaultConfig(test.GetTestToken())
 	client := NewClientWithConfig(config)
 
 	ctx := context.Background()
